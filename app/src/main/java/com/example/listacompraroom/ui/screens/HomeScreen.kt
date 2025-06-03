@@ -15,6 +15,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material3.AlertDialog
@@ -47,7 +48,8 @@ import com.example.listacompraroom.ui.state.ListaCompraViewModel
 fun HomeScreen(
     viewModel: ListaCompraViewModel,
     onProductoClick: (Int) -> Unit,
-    onAddClick: () -> Unit
+    onAddClick: () -> Unit,
+    onUpdateClick: (Int) -> Unit
 ) {
     val productos by viewModel.productos.collectAsState(initial = emptyList())
 
@@ -126,6 +128,12 @@ fun HomeScreen(
                                 showDialog = true
                             }) {
                                 Icon(Icons.Default.Delete, contentDescription = "Borrar producto")
+                            }
+                            IconButton(onClick = {
+                                // Navegar a la pantalla de actualización
+                                onUpdateClick(producto.id)
+                            }) {
+                                Icon(Icons.Default.Edit, contentDescription = "Actualizar producto")
                             }
                         }
                     }

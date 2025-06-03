@@ -67,5 +67,9 @@ class ListaCompraViewModel(application: Application) :  AndroidViewModel(applica
         }
     }
 
+    fun getProductoById(id: Int): Flow<Products> {
+        return listaCompraDao.getListaCompra(id)
+    }
+
 
 }

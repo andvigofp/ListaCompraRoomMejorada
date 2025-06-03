@@ -7,9 +7,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.listacompraroom.ui.navegation.ListaCompraScreen.AddProductosScreen
+import com.example.listacompraroom.ui.navegation.ListaCompraScreen.UpdateScreen
 import com.example.listacompraroom.ui.screens.AddDProductosScreen
 import com.example.listacompraroom.ui.screens.DetalleScreen
 import com.example.listacompraroom.ui.screens.HomeScreen
+import com.example.listacompraroom.ui.screens.UpdateScreen
 import com.example.listacompraroom.ui.state.ListaCompraViewModel
 
 
@@ -23,11 +25,14 @@ fun ListaProductosApp(viewModel: ListaCompraViewModel) {
         composable(ListaCompraScreen.HomeScreen.route) {
             HomeScreen(
                 viewModel = viewModel,
-                onProductoClick =  { listacompraId ->
+                onProductoClick = { listacompraId ->
                     navController.navigate(ListaCompraScreen.DetalleScreen.createRoute(listacompraId))
                 },
                 onAddClick = {
                     navController.navigate(ListaCompraScreen.AddProductosScreen.route)
+                },
+                onUpdateClick = { productoId ->
+                    navController.navigate(ListaCompraScreen.UpdateScreen.createRoute(productoId))
                 }
             )
         }
@@ -43,8 +48,20 @@ fun ListaProductosApp(viewModel: ListaCompraViewModel) {
             )
         }
         composable(ListaCompraScreen.AddProductosScreen.route) {
-            AddDProductosScreen (
+            AddDProductosScreen(
                 viewModel = viewModel,
+                onBack = { navController.popBackStack() }
+            )
+        }
+
+        composable(
+            route = ListaCompraScreen.UpdateScreen.route,
+            arguments = listOf(navArgument("productoID") { type = NavType.IntType })
+        ) { backStackEntry ->
+            val productoId = backStackEntry.arguments?.getInt("productoID") ?: 0
+            UpdateScreen(
+                viewModel = viewModel,
+                productId = productoId,
                 onBack = { navController.popBackStack() }
             )
         }
