@@ -65,4 +65,7 @@ dependencies {
     ksp(libs.androidx.room.compiler)
     //Navigationç
     implementation(libs.androidx.navigation.compose)
+
+    // DataStore Preferences
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
 }

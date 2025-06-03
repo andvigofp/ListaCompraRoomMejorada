@@ -26,6 +26,7 @@ fun UpdateScreen(
     var quantity by remember { mutableStateOf("") }
     var price by remember { mutableStateOf("") }
 
+    //Datos por defecto
     /**LaunchedEffect(producto) {
         producto?.let {
             quantity = it.quantity.toString()

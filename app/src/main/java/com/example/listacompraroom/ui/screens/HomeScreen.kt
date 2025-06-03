@@ -18,6 +18,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.Sort
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
@@ -41,6 +42,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.listacompraroom.data.Products
 import com.example.listacompraroom.ui.state.ListaCompraViewModel
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -56,11 +59,44 @@ fun HomeScreen(
     var productoAEliminar by remember { mutableStateOf<Products?>(null) }
     var showDialog by remember { mutableStateOf(false) }
 
+    var showSortMenu by remember { mutableStateOf(false) }
+
     Scaffold(
         topBar = {
             ListaProductosTopAppBar(
                 title = "ListaCompraApp Andres",
-                canNavigateBack = false
+                canNavigateBack = false,
+                actions = {
+                    IconButton(onClick = { showSortMenu = true }) {
+                        Icon(Icons.Default.Sort, contentDescription = "Ordenar lista")
+                    }
+                    DropdownMenu(
+                        expanded = showSortMenu,
+                        onDismissRequest = { showSortMenu = false }
+                    ) {
+                        DropdownMenuItem(
+                            text = { Text("Ordenar por Nombre") },
+                            onClick = { 
+                                viewModel.setSortOrder("name")
+                                showSortMenu = false 
+                            }
+                        )
+                        DropdownMenuItem(
+                            text = { Text("Ordenar por Cantidad") },
+                            onClick = { 
+                                viewModel.setSortOrder("quantity")
+                                showSortMenu = false 
+                            }
+                        )
+                        DropdownMenuItem(
+                            text = { Text("Ordenar por Precio") },
+                            onClick = { 
+                                viewModel.setSortOrder("price")
+                                showSortMenu = false 
+                            }
+                        )
+                    }
+                }
             )
         },
         floatingActionButton = {
